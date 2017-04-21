@@ -4,6 +4,17 @@
    <%= link_to("发表文章",new_group_post_path(@group), class: "btn btn-primary pull-right")%>
     <%= link_to("Edit", edit_group_path(@group), class: "btn btn-primary pull-right")%>
     <% end %>
+    <span class="pull-right">
+      <% if current_user && current_user.is_member_of?(@group) %>
+        <label class="label label-success"> 群组成员 </label>
+        <%= link_to("Quit Group", quit_group_path(@group), method: :post, class: "btn btn-default") %>
+          <% else %>
+            <label class="label label-warning"> 不是群组成员 </label>
+            <%= link_to("join Group", join_group_path(@group), method: :post, class: "btn btn-default") %>
+
+         <% end %>
+    </span>
+
   </div>
   <h2><%= @group.title %></h2>
   <p><%= @group.description %></p>
@@ -23,5 +34,12 @@
 </tr>
 <% end %>
 </tbody>
+</table>
+<div class="text-center">
+  <%= will_paginate @posts %>
+</div>
+
+
+
 
 </div>
